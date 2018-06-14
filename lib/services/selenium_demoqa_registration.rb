@@ -7,8 +7,8 @@ class SeleniumDemoReg
   # Page field
   FIRST_NAME_FIELD = 'name_3_firstname' # id
   LAST_NAME_FIELD = 'name_3_lastname' # id
-  MARITAL_STATUS =  'label'# tag_name
-  HOBBY_STATUS =  # values
+  MARITAL_STATUS = "//input[@value= '"  # path
+  HOBBY_STATUS = "//input[@value= '" # values
   COUNTRY_DROP_DOWN_LIST = 'dropdown_7' # id
   DOB_MONTH_DROPDOWN_LIST = 'mm_date_8' # id
   DOB_DAY_DROPDOWN_LIST = 'dd_date_8' # id
@@ -21,7 +21,7 @@ class SeleniumDemoReg
   PASSWORD_FIELD = 'password_2' # id
   CONFIRM_PASSWORD_FIELD = 'confirm_password_password_2' # id
   SUBMIT_BUTTON = 'pie_submit' # name
-  REGISTRATION_CONFIRMATION = #class
+  REGISTRATION_CONFIRMATION = 'piereg_message' #class
 
   def initialize
     # set up driver
@@ -65,13 +65,13 @@ class SeleniumDemoReg
 
   # Marital option management - Difficulty Medium
   def select_marital_option(marital_status)
-    @chrome_driver.find_element(:xpath,"//input[@value= '#{marital_status}']").click
+    @chrome_driver.find_element(:xpath, "#{MARITAL_STATUS}#{marital_status}']").click
     sleep 2
   end
 
   # hobby option management - Difficulty Medium
   def select_hobby_option(hobby)
-    @chrome_driver.find_element(:xpath,"//input[@value= '#{hobby}']").click
+    @chrome_driver.find_element(:xpath,"#{HOBBY_STATUS}#{hobby}']").click
     sleep 2
   end
 
@@ -177,6 +177,11 @@ class SeleniumDemoReg
   end
 
   def check_registration_successful
-    p @chrome_driver.find_element(:xpath, '//div/p[@class="piereg_message"]').text
+    @chrome_driver.find_element(:class, REGISTRATION_CONFIRMATION).displayed?
   end
 end
+
+# testing = SeleniumDemoReg.new
+# testing.access_registration_form
+# testing.select_marital_option('single')
+# testing.select_hobby_option('cricket ')

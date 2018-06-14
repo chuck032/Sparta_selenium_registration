@@ -1,23 +1,23 @@
 require 'spec_helper'
-require 'faker'
+require_relative '../lib/generate/data_generator'
 
 describe 'testing the demoqa registration page' do
 
   before(:all) do
     @driver = SeleniumDemoReg.new
     @driver.access_registration_form
-    @firstname = Faker::Name.first_name
-    @lastname = Faker::Name.last_name
-    @marital_status = ["single","married","divorced"]
-    @hobby = ["dance","reading","cricket "]
-    @day = "25"
-    @month = "12"
-    @year = "2014"
-    @country = Faker::Address.country
-    @phone_number = Faker::Company.swedish_organisation_number
-    @user_name = Faker::FunnyName.name
-    @details = Faker::MostInterestingManInTheWorld.quote
-    @password = Faker::Internet.password
+    @firstname = DataGenerator.new.gen_first_name
+    @lastname = DataGenerator.new.gen_last_name
+    @marital_status = DataGenerator.new.gen_marital_status
+    @hobby = DataGenerator.new.gen_hobby
+    @day = DataGenerator.new.gen_day
+    @month = DataGenerator.new.gen_month
+    @year = DataGenerator.new.gen_year
+    @country = DataGenerator.new.gen_country
+    @phone_number = DataGenerator.new.gen_phone_number
+    @user_name = DataGenerator.new.gen_user_name
+    @details = DataGenerator.new.gen_details
+    @password = DataGenerator.new.gen_password
   end
 
   context 'positive paths for the registration form and register' do
@@ -39,11 +39,11 @@ describe 'testing the demoqa registration page' do
     end
 
     it 'should accept a marital status selection of Single, Married, or Divorced' do
-      @marital_status.each { |x| @driver.select_marital_option(x) }
+      @driver.select_marital_option(@marital_status)
     end
 
     it 'should accept a hobby status selection of Dance, Reading, or Cricket' do
-      @hobby.each { |x| @driver.select_hobby_option(x) }
+      @driver.select_hobby_option(@hobby)
     end
 
     it 'should have a country default of Afghanistan' do
